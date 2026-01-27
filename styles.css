@@ -1,0 +1,83 @@
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #DCDCDC;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #9932CC;
+  border-radius: 6px;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+form label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+input, select, button {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+button {
+  cursor: pointer;
+}
+
+#random-btn {
+  margin: 1rem 0;
+}
+
+.hidden {
+  display: none;
+}
+
+/* genre colours */
+.genre-horror {
+  background-color: #000000;
+}
+
+.genre-fantasy{
+  background-color: #8A2BE2;
+}
+
+.genre-romantasy{
+  background-color: #FF1493;
+}
+
+.genre-thriller {
+  background-color: #B22222;
+}
+
+.genre-nonfiction {
+  background-color: #006400;
+}
+
+.genre-femlit {
+  background-color: #FFD700;
+}
+
+.genre-other {
+  background-color: #1E90FF;
+}
+
+#selected-book {
+  background-color: #90EE90;
+}
+
+#history li {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+
+

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+  <meta charset="utf-8">
+  <title>Random book selector</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<main class="container">
+  <h1>Input books</h1>
+
+<! book input form>
+  <form id="bookForm">
+   <label for="title">Book name:</label>
+    <input type="text" id="title" name="title" required><br>
+   <label for="author">Author name: </label>
+     <input type="text" id="author" name="author"><br>
+    <label for="genre">Genre:</label>
+
+    <!dropdown for genre>
+    <select name="genre" id="genre" required>
+         <option value="horror">Horror</option>
+         <option value="romance">Romance</option>
+         <option value="romantasy">Romantasy</option>
+         <option value="thriller">Thriller/mystery</option>
+         <option value="nonfiction">Non-fiction</option>
+          <option value="femlit">Feminist Literature</option>
+         <option value="other">Other</option>
+    </select>
+  <button type="submit" form="bookForm">Submit</button>
+  </form>
+
+<! random selection>
+  <button id="random-btn">Spin for random book</button>
+
+<! selected book display>
+<section id="selected-book" class="hidden">
+  <h2>Selected book</h2>
+  <p id="selected-details"></p>
+</section>
+
+<!history>
+<section>
+  <h2>Previously chosen books</h2>
+  <ul id="history"></ul>
+</section>
+</main>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+
