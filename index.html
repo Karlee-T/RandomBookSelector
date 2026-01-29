@@ -1,56 +1,50 @@
 <!DOCTYPE html>
-<html lang="en-GB">
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Random book selector</title>
-  <link rel="stylesheet" href="styles.css"/>
+    <meta charset="UTF-8">
+    <title>Book Spinner</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-<main class="container">
-  <h1>Input books</h1>
+<h1>Trust in the book wheel</h1>
 
-<! book input form>
-  <form id="bookForm">
-   <label for="title">Book name:</label>
-    <input type="text" id="title" name="title" required><br>
-   <label for="author">Author name: </label>
-     <input type="text" id="author" name="author"><br>
-    <label for="genre">Genre:</label>
+<div class="form-container">
+    <input id="title" placeholder="Book title">
+    <input id="author" placeholder="Author">
 
-    <!dropdown for genre>
-    <select name="genre" id="genre" required>
-         <option value="horror">Horror</option>
-         <option value="romance">Romance</option>
-         <option value="romantasy">Romantasy</option>
-         <option value="thriller">Thriller/mystery</option>
-         <option value="nonfiction">Non-fiction</option>
-          <option value="femlit">Feminist Literature</option>
-         <option value="other">Other</option>
+    <select id="genre">
+        <option value="">Select genre</option>
+        <option value="horror">Horror</option>
+        <option value="romance">Romance</option>
+        <option value="romantasy">Romantasy</option>
+        <option value="thriller">Thriller</option>
+        <option value="nonfiction">Non-fiction</option>
+        <option value="femlit">Femlit</option>
+        <option value="other">Other</option>
     </select>
-  <button type="submit" form="bookForm">Submit</button>
-  </form>
 
-<! random selection>
-  <button id="random-btn">Spin for random book</button>
+    <button onclick="addBook()">Add book</button>
+</div>
 
-<! selected book display>
-<section id="selected-book" class="hidden">
-  <h2>Selected book</h2>
-  <p id="selected-details"></p>
-</section>
+<div id="pointer"></div>
+<div id="wheel-container"></div>
 
-<!history>
-<section>
-  <h2>Previously chosen books</h2>
-  <ul id="history"></ul>
-</section>
-</main>
+<button onclick="spinWheel()">Spin the wheel</button>
 
-  <script src="script.js"></script>
+<div id="result"></div>
+
+<div class="book-list">
+    <h3>List of books</h3>
+    <div id="bookList"></div>
+</div>
+
+<div class="history">
+    <h3>History</h3>
+    <div id="historyList"></div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
-
-
-
