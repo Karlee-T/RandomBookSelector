@@ -1,5 +1,6 @@
 let books = JSON.parse(localStorage.getItem("books")) || [];
 let history = JSON.parse(localStorage.getItem("history")) || [];
+let stats = JSON.parse(localStorage.getItem("stats")) || {};
 
 const genreClassMap = {
     horror: "genre-horror",
@@ -11,9 +12,34 @@ const genreClassMap = {
     other: "genre-other"
 };
 
+document.getElementById("addBtn").addEventListener("click", addBook);
+document.getElementById("pickBtn").addEventListener("click", pickRandom);
+document.getElementById("saveBtn").addEventListener("click", saveBooks);
+document.getElementById("clearBtn").addEventListener("click", clearAll);
+
 function saveData() {
     localStorage.setItem("books", JSON.stringify(books));
     localStorage.setItem("history", JSON.stringify(history));
+    localStorage.setItem("stats", JSON.stringify(stats));
+}
+
+function saveBooks() {
+    saveData();
+    alert("✨ The spell has been preserved.");
+}
+
+function clearAll() {
+    if (!confirm("Your tomes will be released into the ether. Proceed?")) return;
+
+    books = [];
+    history = [];
+    stats = {};
+    saveData();
+
+    renderBookList();
+    renderHistory();
+    renderStats();
+    document.getElementById("result").textContent = "";
 }
 
 function addBook() {
@@ -48,7 +74,7 @@ function renderBookList() {
 
         div.innerHTML = `
             <span><strong>${book.title}</strong> – ${book.author}</span>
-            <button onclick="deleteBook(${index})">Delete</button>
+            <button onclick="deleteBook(${index})">🗑</button>
         `;
 
         list.appendChild(div);
@@ -60,36 +86,38 @@ function pickRandom() {
 
     const items = document.querySelectorAll(".book-item");
     let index = 0;
-    let steps = Math.floor(Math.random() * 6) + 5; // 5–10 steps
-    let delay = 120;
+    let steps = Math.floor(Math.random() * 6) + 15;
 
-    items.forEach(item => item.classList.remove("active"));
+    items.forEach(i => i.classList.remove("active"));
 
-    const interval = setInterval(() => {
-        items.forEach(item => item.classList.remove("active"));
-
+    function step() {
+        items.forEach(i => i.classList.remove("active"));
         items[index].classList.add("active");
 
         index = (index + 1) % items.length;
         steps--;
 
-        delay += 35;
-
-        if (steps <= 0) {
-            clearInterval(interval);
-
+        if (steps > 0) {
+            setTimeout(step, 140 + (5 - steps) * 60);
+        } else {
             const chosenIndex = (index - 1 + items.length) % items.length;
             const chosen = books[chosenIndex];
 
             document.getElementById("result").textContent =
-                `📖 Selected: "${chosen.title}" by ${chosen.author} (${chosen.genre})`;
+                `✨ The oracle reveals: "${chosen.title}" by ${chosen.author}`;
 
             history.unshift(chosen);
             history = history.slice(0, 10);
+
+            stats[chosen.genre] = (stats[chosen.genre] || 0) + 1;
+
             saveData();
             renderHistory();
+            renderStats();
         }
-    }, delay);
+    }
+
+    step();
 }
 
 function renderHistory() {
@@ -105,6 +133,21 @@ function renderHistory() {
     });
 }
 
-// Initial load
+function renderStats() {
+    const list = document.getElementById("statsList");
+    list.innerHTML = "";
+
+    Object.entries(stats)
+        .sort((a, b) => b[1] - a[1])
+        .forEach(([genre, count]) => {
+            const div = document.createElement("div");
+            div.className = "stats-item";
+            div.textContent = `${genre} — ${count} summonings`;
+            list.appendChild(div);
+        });
+}
+
+// Initial render
 renderBookList();
 renderHistory();
+renderStats();
