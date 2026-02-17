@@ -1,6 +1,5 @@
 let books = JSON.parse(localStorage.getItem("books")) || [];
 let history = JSON.parse(localStorage.getItem("history")) || [];
-let rotation = 0;
 
 const genreClassMap = {
     horror: "genre-horror",
@@ -26,7 +25,6 @@ function addBook() {
 
     books.push({ title, author, genre });
     saveData();
-    drawWheel();
     renderBookList();
 
     document.getElementById("title").value = "";
@@ -37,55 +35,7 @@ function addBook() {
 function deleteBook(index) {
     books.splice(index, 1);
     saveData();
-    drawWheel();
     renderBookList();
-}
-
-function drawWheel() {
-    const wheel = document.getElementById("wheel-container");
-    wheel.innerHTML = "";
-
-    if (books.length === 0) return;
-
-    const sliceAngle = 360 / books.length;
-
-    books.forEach((book, index) => {
-        const segment = document.createElement("div");
-        segment.className = `segment ${genreClassMap[book.genre]}`;
-
-        const angle = sliceAngle * index;
-        segment.style.transform =
-            `rotate(${angle}deg) skewY(${90 - sliceAngle}deg)`;
-
-        segment.innerHTML = `
-            <div style="transform: skewY(-${90 - sliceAngle}deg) rotate(${sliceAngle / 2}deg);">
-                <strong>${book.title}</strong><br>
-                <small>${book.author}</small>
-            </div>
-        `;
-
-        wheel.appendChild(segment);
-    });
-}
-
-function spinWheel() {
-    if (books.length === 0) return;
-
-    const randomIndex = Math.floor(Math.random() * books.length);
-    const sliceAngle = 360 / books.length;
-
-    rotation += 360 * 5 + (360 - randomIndex * sliceAngle);
-    document.getElementById("wheel-container").style.transform =
-        `rotate(${rotation}deg)`;
-
-    const chosen = books[randomIndex];
-    document.getElementById("result").textContent =
-        `📖 Selected: "${chosen.title}" by ${chosen.author} (${chosen.genre})`;
-
-    history.unshift(chosen);
-    history = history.slice(0, 10);
-    saveData();
-    renderHistory();
 }
 
 function renderBookList() {
@@ -94,12 +44,7 @@ function renderBookList() {
 
     books.forEach((book, index) => {
         const div = document.createElement("div");
-        div.className = "book-item";
-        div.style.borderLeftColor =
-            getComputedStyle(document.documentElement)
-            .getPropertyValue(`--${book.genre}`);
-
-        div.classList.add(genreClassMap[book.genre]);
+        div.className = `book-item ${genreClassMap[book.genre]}`;
 
         div.innerHTML = `
             <span><strong>${book.title}</strong> – ${book.author}</span>
@@ -108,6 +53,43 @@ function renderBookList() {
 
         list.appendChild(div);
     });
+}
+
+function pickRandom() {
+    if (books.length === 0) return;
+
+    const items = document.querySelectorAll(".book-item");
+    let index = 0;
+    let steps = Math.floor(Math.random() * 6) + 5; // 5–10 steps
+    let delay = 120;
+
+    items.forEach(item => item.classList.remove("active"));
+
+    const interval = setInterval(() => {
+        items.forEach(item => item.classList.remove("active"));
+
+        items[index].classList.add("active");
+
+        index = (index + 1) % items.length;
+        steps--;
+
+        delay += 35;
+
+        if (steps <= 0) {
+            clearInterval(interval);
+
+            const chosenIndex = (index - 1 + items.length) % items.length;
+            const chosen = books[chosenIndex];
+
+            document.getElementById("result").textContent =
+                `📖 Selected: "${chosen.title}" by ${chosen.author} (${chosen.genre})`;
+
+            history.unshift(chosen);
+            history = history.slice(0, 10);
+            saveData();
+            renderHistory();
+        }
+    }, delay);
 }
 
 function renderHistory() {
@@ -124,6 +106,5 @@ function renderHistory() {
 }
 
 // Initial load
-drawWheel();
 renderBookList();
 renderHistory();
