@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Book Spinner</title>
+    <title>Book Picker</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-<h1>Book choice is law</h1>
+<h1>Random Book Picker</h1>
 
 <div class="form-container">
     <input id="title" placeholder="Book title">
@@ -28,20 +28,17 @@
     <button onclick="addBook()">Add book</button>
 </div>
 
-<div id="pointer"></div>
-<div id="wheel-container"></div>
-
-<button onclick="spinWheel()">Spin the wheel</button>
+<button class="pick-btn" onclick="pickRandom()">🎯 Pick a random book</button>
 
 <div id="result"></div>
 
-<div class="book-list">
-    <h3>List of books</h3>
+<div class="picker-container">
+    <div id="arrow">➡</div>
     <div id="bookList"></div>
 </div>
 
 <div class="history">
-    <h3>History</h3>
+    <h3>🕘 Selection history</h3>
     <div id="historyList"></div>
 </div>
 
