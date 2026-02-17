@@ -2,20 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Book Picker</title>
+    <title>Witchy Book Oracle</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-<h1>Random Book Picker</h1>
+<h1>The Book Oracle</h1>
+<p class="subtitle">Put your fate in the wheel. The wheel is law</p>
 
 <div class="form-container">
     <input id="title" placeholder="Book title">
     <input id="author" placeholder="Author">
 
     <select id="genre">
-        <option value="">Select genre</option>
+        <option value="">Choose a genre</option>
         <option value="horror">Horror</option>
         <option value="romance">Romance</option>
         <option value="romantasy">Romantasy</option>
@@ -25,23 +26,32 @@
         <option value="other">Other</option>
     </select>
 
-    <button onclick="addBook()">Add book</button>
+    <button onclick="addBook()">Add to Grimoire</button>
 </div>
 
-<button class="pick-btn" onclick="pickRandom()">🎯 Pick a random book</button>
+<div class="controls">
+    <button onclick="pickRandom()">Summon a Book</button>
+    <button onclick="saveBooks()">Preserve the Spell</button>
+    <button class="danger" onclick="clearAll()">🧹 Clear All Magic</button>
+</div>
 
-<div id="result"></div>
+<div id="result" class="result"></div>
 
 <div class="picker-container">
-    <div id="arrow">➡</div>
+   <!--<div id="arrow">➤</div>--> 
     <div id="bookList"></div>
 </div>
 
+<div class="stats">
+    <h3>Arcane Statistics</h3>
+    <div id="statsList"></div>
+</div>
+
 <div class="history">
-    <h3>🕘 Selection history</h3>
+    <h3>Reading Fate</h3>
     <div id="historyList"></div>
 </div>
 
-<script src="script.js"></script>
+<script src="wheelspinjs.js"></script>
 </body>
 </html>
