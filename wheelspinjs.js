@@ -86,7 +86,7 @@ function pickRandom() {
 
     const items = document.querySelectorAll(".book-item");
     let index = 0;
-    let steps = Math.floor(Math.random() * 6) + 15;
+    let steps = Math.floor(Math.random() * 6) + 5;
 
     items.forEach(i => i.classList.remove("active"));
 
